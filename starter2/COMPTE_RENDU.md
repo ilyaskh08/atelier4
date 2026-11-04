@@ -1,6 +1,6 @@
 # Compte rendu : tester, sécuriser et appeler l'API LogiAI
 
-**Noms :** à compléter  **Groupe :** à compléter
+**Nom :** Ilyas Kharroubi  **Groupe :** à compléter
 
 ## 1. Casser son API (activité 1)
 
@@ -60,9 +60,15 @@ def verify_api_key(x_api_key: str | None = Header(default=None)) -> str:
 
 - Le `fetch` envoie la livraison en `POST` JSON et transmet la clé dans
   l'en-tête `X-API-Key`. La page n'enregistre pas la clé.
-- Résultats attendus : une livraison valide affiche la probabilité et son état
-  d'alerte ; une pluie de 500 mm affiche l'erreur de validation 422 ; une
-  mauvaise clé affiche une erreur d'authentification 401.
+- Résultats : une livraison valide affiche la probabilité et son état d'alerte ;
+  une pluie de 500 mm affiche l'erreur de validation 422 ; une mauvaise clé
+  affiche une erreur d'authentification 401.
+- Sur la capture de l'interface, les valeurs saisies sont : distance 120 km,
+  poids 450 kg, départ à 17 h, pluie 8 mm, trafic 7,5, 4 arrêts et camion.
+  La prédiction affichée est de **73,2 %**, avec l'alerte « livraison à risque ».
+  La clé API est masquée dans le champ.
+- Capture de l'interface : ![Interface LogiAI affichant une probabilité de
+  retard de 73,2 % et une alerte de risque](docs/captures/interface-logiai.png)
 - Vérification CORS automatisée avec une requête preflight : l'origine
   `http://localhost:5500` reçoit 200 et l'en-tête
   `Access-Control-Allow-Origin`; `http://localhost:5501` reçoit 400 sans cet
@@ -101,4 +107,6 @@ def verify_api_key(x_api_key: str | None = Header(default=None)) -> str:
 
 ## 6. Lien de la pull request
 
-À compléter après la publication de la branche sur GitHub.
+La branche `tp-securite` et le tag `tp4` sont publiés sur GitHub. La pull
+request vers `main` reste à créer :
+[Créer la pull request](https://github.com/ilyaskh08/atelier4/compare/main...tp-securite?expand=1).
