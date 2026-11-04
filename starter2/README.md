@@ -26,11 +26,18 @@ Suite du TP précédent : l'API LogiAI existe. Aujourd'hui vous la testez pour l
 
     python -m pytest
 
-## Où sont les trous (cherchez les TODO)
+## Sécurité et tests
 
-- `logiai/api/security.py` : deux fonctions à écrire
-- `logiai/api/main.py` : protéger deux routes, ajouter le CORS
-- `tests/test_casser.py` (4 cas à ajouter), `tests/test_limites.py` (cas limites à compléter), `tests/test_securite.py` (tests à écrire : ils échouent tant qu'ils ne sont pas écrits)
-- `docs/adr/003-securite.md` : deux décisions à justifier
-- `web/index.html` : le fetch et trois améliorations d'ergonomie
-- Le projet contient **2 bugs volontaires** : vos tests doivent les trouver.
+L'API protège `/v1/predict` par une clé utilisateur ou administrateur et
+réserve `/v1/model-info` à l'administrateur. `/health` reste publique. La page
+web envoie la clé dans l'en-tête `X-API-Key` ; le CORS est limité aux origines
+déclarées dans `logiai/config.py` (par défaut `localhost:5500` et
+`127.0.0.1:5500`).
+
+Les tests couvrent les entrées invalides, les bornes des livraisons et les
+règles d'authentification :
+
+    python -m pytest
+
+Les clés réelles sont lues depuis `.env` et ne doivent jamais être ajoutées à
+Git. `COMPTE_RENDU.md` contient les résultats et réponses de l'atelier.

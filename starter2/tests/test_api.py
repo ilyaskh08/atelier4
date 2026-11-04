@@ -43,3 +43,29 @@ def test_champ_inconnu_refuse(client, headers_user, livraison_valide):
 def test_modele_absent_renvoie_503(client, headers_user, livraison_valide):
     state.pop("predictor", None)  # on simule un modèle non chargé
     assert client.post("/v1/predict", json=livraison_valide, headers=headers_user).status_code == 503
+
+
+def test_cors_autorise_origine_configuree(client):
+    r = client.options(
+        "/v1/predict",
+        headers={
+            "Origin": "http://localhost:5500",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type,x-api-key",
+        },
+    )
+    assert r.status_code == 200
+    assert r.headers["access-control-allow-origin"] == "http://localhost:5500"
+
+
+def test_cors_refuse_origine_non_configuree(client):
+    r = client.options(
+        "/v1/predict",
+        headers={
+            "Origin": "http://localhost:5501",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type,x-api-key",
+        },
+    )
+    assert r.status_code == 400
+    assert "access-control-allow-origin" not in r.headers
