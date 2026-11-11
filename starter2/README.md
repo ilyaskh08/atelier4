@@ -22,6 +22,18 @@ Suite du TP précédent : l'API LogiAI existe. Aujourd'hui vous la testez pour l
     python -m http.server 5500 --directory web              # la page web, dans un 2e terminal
     # ouvrez http://localhost:5500
 
+### Avec Docker Compose
+
+Depuis `starter2`, copiez `.env.example` vers `.env`, remplacez les deux clés
+par vos propres valeurs, puis lancez :
+
+    docker compose up -d --build
+
+Ouvrez http://localhost:8080. Le modèle est généré pendant la construction de
+l'image API. Pour arrêter les services :
+
+    docker compose down
+
 ## Tester
 
     python -m pytest
